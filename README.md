@@ -30,7 +30,7 @@ new zone: onHasTask
 new zone: onInvokeTask
 ---> eventName = load
 ---> eventName = XMLHttpRequest.addEventListener:load
-app.js:65 GET request OK. Data is  {"data":"[get ok 42]"}
+GET request OK. Data is  {"data":"[get ok 42]"}
 ```
 
 These are the JS console logs from JSONP request:
