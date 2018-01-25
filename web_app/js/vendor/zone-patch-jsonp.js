@@ -38,14 +38,32 @@ Zone.__load_patch('jsonp', function (global, Zone, api) {
             if (!onSuccessInfo || !onSuccessInfo.target || !onSuccessInfo.callbackName) {
                 return delegate.apply(self, args);
             }
-            var onSuccessCallback = onSuccessInfo.target[onSuccessInfo.callbackName];
+            var onSuccessCallback = onSuccessInfo.target[api.symbol(onSuccessInfo.callbackName)];
+            if (onSuccessCallback) {
+                // clear patched version, because jsonp implementation often use static way
+                // and recover with non-patched one.
+                onSuccessInfo.target[api.symbol(onSuccessInfo.callbackName)] = null;
+                onSuccessInfo.target[onSuccessInfo.callbackName] = onSuccessCallback;
+            }
+            else {
+                onSuccessCallback = onSuccessInfo.target[onSuccessInfo.callbackName];
+            }
             var task;
             api.patchMethod(onSuccessInfo.target, onSuccessInfo.callbackName, function (successDelegate) { return function (successSelf, successArgs) {
                 return task && task.invoke.apply(successSelf, successArgs);
             }; });
             var onErrorInfo = options.onErrorCallbackFactory(self, args);
             if (onErrorInfo && onErrorInfo.target && !onErrorInfo.callbackName) {
-                var onErrorCallback_1 = onErrorInfo.target[onErrorInfo.callbackName];
+                var onErrorCallback_1 = onErrorInfo.target[api.symbol(onErrorInfo.callbackName)];
+                if (onErrorCallback_1) {
+                    // clear patched version, because jsonp implementation often use static way
+                    // and recover with non-patched one.
+                    onErrorInfo.target[api.symbol(onErrorInfo.callbackName)] = null;
+                    onErrorInfo.target[onErrorInfo.callbackName] = onErrorCallback_1;
+                }
+                else {
+                    onErrorCallback_1 = onErrorInfo.target[onErrorInfo.callbackName];
+                }
                 var zone_1 = Zone.current;
                 api.patchMethod(onErrorInfo.target, onErrorInfo.callbackName, function (errorDelegate) { return function (errorSelf, errorArgs) {
                     if (zone_1 && zone_1 !== Zone.root) {
