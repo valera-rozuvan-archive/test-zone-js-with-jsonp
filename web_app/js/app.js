@@ -34,7 +34,7 @@ const makeJsonpRequest = (store) => {
     getJSONP.send('/api/simple_jsnop?callback=execute_jsonp_callback', {
         callbackName: 'execute_jsonp_callback',
         onSuccess: (responseText) => {
-            console.log('JSONP request OK. Data is ', responseText);
+            console.log('JSONP request OK. Data is ', responseText, Zone.current.name);
 
             let response = {
                 data: ''
@@ -62,7 +62,7 @@ const makeGetRequest = (store) => {
     xhr.open('GET', 'api/simple_get');
     xhr.onload = () => {
         if (xhr.status === 200) {
-            console.log('GET request OK. Data is ', xhr.responseText);
+            console.log('GET request OK. Data is ', xhr.responseText, Zone.current.name);
 
             let response = {
                 data: ''
@@ -236,7 +236,22 @@ const newZone = rootZone.fork({
     }
 });
 console.log(rootZone.name, newZone.parent.name);
-
+Zone['__zone_symbol__jsonp']({
+    jsonp: getJSONP,
+    sendFuncName: 'send',
+    onSuccessCallbackFactory: function (self, args) {
+        return {
+            target: args[1],
+            callbackName: 'onSuccess'
+        };
+    },
+    onErrorCallbackFactory: function (self, args) {
+        return {
+            target: args[1],
+            callbackName: 'onTimeout'
+        };
+    }
+});
 newZone.run(() => {
     console.log(Zone.current.name, Zone.current === newZone);
 
