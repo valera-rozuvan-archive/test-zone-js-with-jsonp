@@ -239,18 +239,7 @@ console.log(rootZone.name, newZone.parent.name);
 Zone['__zone_symbol__jsonp']({
     jsonp: getJSONP,
     sendFuncName: 'send',
-    onSuccessCallbackFactory: function (self, args) {
-        return {
-            target: args[1],
-            callbackName: 'onSuccess'
-        };
-    },
-    onErrorCallbackFactory: function (self, args) {
-        return {
-            target: args[1],
-            callbackName: 'onTimeout'
-        };
-    }
+    successFuncName: 'execute_jsonp_callback'
 });
 newZone.run(() => {
     console.log(Zone.current.name, Zone.current === newZone);
