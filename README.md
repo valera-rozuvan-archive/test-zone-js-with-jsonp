@@ -1,5 +1,11 @@
 # Test how Zone.js handles JSONP
 
+## Update in 2022
+
+With the fix from [PR](https://github.com/valera-rozuvan/test-zone-js-with-jsonp/pull/3) by [JiaLiPassion](https://github.com/JiaLiPassion), the original issue should be gone.
+
+## For historic purposes
+
 This repository tries to confirm the fact that [Zone.js](https://github.com/angular/zone.js/) can't
 (doesn't) monkey patch JSONP. The project consists of a front-end application, and a back-end application.
 In the web app interface, there are two buttons. The first button triggers a GET request, the second
