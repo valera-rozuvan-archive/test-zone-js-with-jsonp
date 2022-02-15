@@ -2,7 +2,9 @@
 
 ## Update in 2022
 
-With the fix from [PR](https://github.com/valera-rozuvan/test-zone-js-with-jsonp/pull/3) by [JiaLiPassion](https://github.com/JiaLiPassion), the original issue should be gone.
+With the fix in the [PR](https://github.com/valera-rozuvan/test-zone-js-with-jsonp/pull/3) by [JiaLiPassion](https://github.com/JiaLiPassion), the original issue should be gone.
+
+This repo was created in order to better showcase the [Angular issue 7792](https://github.com/angular/angular/issues/7792).
 
 ## For historic purposes
 
